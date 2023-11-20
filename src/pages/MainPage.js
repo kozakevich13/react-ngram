@@ -47,7 +47,7 @@ const MainPage = () => {
 
     const generateData = async () => {
         try {
-            const response = await axios.get('http://127.0.0.1:5000/generation');
+            const response = await axios.get(`http://127.0.0.1:5000/generation?seed_word=${singleWordInput}&num_words=6`);
             console.log(response.data);
             setResponseData(response.data);
         } catch (error) {
