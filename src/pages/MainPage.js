@@ -12,6 +12,7 @@ const MainPage = () => {
     const [responseData, setResponseData] = useState(null);
     const [largeTextInput, setLargeTextInput] = useState('');
     const [singleWordInput, setSingleWordInput] = useState('');
+    const [numWordsInput, setNumWordsInput] = useState(6);
     const userName = localStorage.getItem('userName');
     const userImg = localStorage.getItem('userImg');
     const navigate = useNavigate();
@@ -47,7 +48,7 @@ const MainPage = () => {
 
     const generateData = async () => {
         try {
-            const response = await axios.get(`http://127.0.0.1:5000/generation?seed_word=${singleWordInput}&num_words=6`);
+            const response = await axios.get(`http://127.0.0.1:5000/generation?seed_word=${singleWordInput}&num_words=${numWordsInput}`);
             console.log(response.data);
             setResponseData(response.data);
         } catch (error) {
@@ -84,6 +85,14 @@ const MainPage = () => {
                 label="Введіть одне слово"
                 value={singleWordInput}
                 onChange={(e) => setSingleWordInput(e.target.value)}
+            />
+
+            <TextField
+                id="outlined-basic"
+                label="Кількість слів"
+                type="number"
+                value={numWordsInput}
+                onChange={(e) => setNumWordsInput(e.target.value)}
             />
 
             {/* Кнопки для відправлення текстів та генерації */}
