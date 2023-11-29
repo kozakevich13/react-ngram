@@ -1,0 +1,54 @@
+/* MainPage.css */
+
+.main-container {
+    background-color: #24292e; /* Dark background color */
+    color: #ffffff; /* Light text color */
+    padding: 20px;
+    height: 95vh; /* Set height to 100% of the viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Adjust as needed */
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .button-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  /* Add more styles as needed */
+
+
+  .main-block {
+    display: flex;
+    flex: 1;
+    height: 80%;
+  }
+  
+  .first-block,
+  .second-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px; /* Add margin for separation between blocks */
+  }
+  .first-block,
+  .second-block,
+  .TextField {
+    flex: 1;
+  }
+  
+  .TextField {
+    width: 100%;
+  }
