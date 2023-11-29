@@ -1,0 +1,31 @@
+.auth-container {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+  }
+  
+  .centered-content {
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  .login-button {
+    background-color: #4285f4;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  .login-button:hover {
+    background-color: #2d70f7;
+  }
+.google {
+    /* background-color: black; */
+    width: 200px;
+    margin-left: 108px;
+}  
