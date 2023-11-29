@@ -18,6 +18,7 @@ const MainPage = () => {
   const [numWordsInput, setNumWordsInput] = useState(6);
   const [loading, setLoading] = useState(false);
   const [bigramDict, setBigramDict] = useState(null);
+  const [selectedNGramType, setSelectedNGramType] = useState('bigram');
   const userName = localStorage.getItem('userName');
   const userImg = localStorage.getItem('userImg');
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ const MainPage = () => {
 
   const generateData = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:5000/generation?seed_word=${singleWordInput}&num_words=${numWordsInput}`);
+      const response = await axios.get(`http://127.0.0.1:5000/generation?seed_word=${singleWordInput}&num_words=${numWordsInput}&n_gram_type=${selectedNGramType}`);
       console.log(response.data);
       setResponseData(response.data);
     } catch (error) {
@@ -90,6 +91,11 @@ const MainPage = () => {
       // Виведення словника біграм в консоль або обробка даних за вашими потребами
     }
   }, [bigramDict]);
+
+  const handleSelectChange = (event) => {
+    setSelectedNGramType(event.target.value);
+  }; 
+  console.log(selectedNGramType)
 
   return (
     <div className="main-container">
@@ -176,6 +182,14 @@ const MainPage = () => {
         >
           Генерація
         </Button>
+        <div>
+          <label>Виберіть тип N-грам</label>
+          <select value={selectedNGramType} onChange={handleSelectChange}>
+            <option value="bigram">Bigram</option>
+            <option value="trigram">Trigram</option>
+          </select>
+        </div>
+    
 
         
       </div>
