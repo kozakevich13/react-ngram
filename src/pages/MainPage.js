@@ -76,8 +76,9 @@ const MainPage = () => {
   const handleGetBigramDict = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:5000/bigram_dict');
-      setBigramDict(response.data.bigram_dict);
+      const response = await axios.get(`http://localhost:5000/n-grams?type=${selectedNGramType}`);
+      console.log(response.data)
+      setBigramDict(response.data.n_gram_dict);
     } catch (error) {
       console.error('Error getting bigram dictionary:', error.message);
     } finally {
