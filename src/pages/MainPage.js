@@ -16,6 +16,7 @@ const MainPage = () => {
   const [largeTextInput, setLargeTextInput] = useState('');
   const [singleWordInput, setSingleWordInput] = useState('');
   const [numWordsInput, setNumWordsInput] = useState(6);
+  const [loading, setLoading] = useState(false);
   const userName = localStorage.getItem('userName');
   const userImg = localStorage.getItem('userImg');
   const navigate = useNavigate();
@@ -56,6 +57,17 @@ const MainPage = () => {
       setResponseData(response.data);
     } catch (error) {
       console.error('Error generating data:', error);
+    }
+  };
+  const handleClearText = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.delete('http://localhost:5000/delete_text');
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error clearing text:', error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -124,6 +136,14 @@ const MainPage = () => {
           style={{ backgroundColor: '#4CAF50', color: 'white' }}
         >
           Генерація
+        </Button>
+
+        <Button 
+        onClick={handleClearText} 
+        disabled={loading}
+        style={{ backgroundColor: '#75201a', color: 'white' }}
+        >
+          {loading ? 'Очистка...' : 'Очистити історію навчання'}
         </Button>
 
         
