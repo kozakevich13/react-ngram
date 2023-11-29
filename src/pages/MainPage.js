@@ -17,6 +17,7 @@ const MainPage = () => {
   const [singleWordInput, setSingleWordInput] = useState('');
   const [numWordsInput, setNumWordsInput] = useState(6);
   const [loading, setLoading] = useState(false);
+  const [bigramDict, setBigramDict] = useState(null);
   const userName = localStorage.getItem('userName');
   const userImg = localStorage.getItem('userImg');
   const navigate = useNavigate();
@@ -70,6 +71,25 @@ const MainPage = () => {
       setLoading(false);
     }
   };
+
+  const handleGetBigramDict = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get('http://localhost:5000/bigram_dict');
+      setBigramDict(response.data.bigram_dict);
+    } catch (error) {
+      console.error('Error getting bigram dictionary:', error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (bigramDict) {
+      console.log('Bigram Dictionary:', bigramDict);
+      // Виведення словника біграм в консоль або обробка даних за вашими потребами
+    }
+  }, [bigramDict]);
 
   return (
     <div className="main-container">
@@ -126,24 +146,35 @@ const MainPage = () => {
           Відправити багаторядковий текст
         </Button>
 
-        <Button variant="contained" onClick={() => sendOneWordToServer(singleWordInput)}>
+        {/* <Button variant="contained" onClick={() => sendOneWordToServer(singleWordInput)}>
           Відправити одне слово
+        </Button> */}
+
+      
+
+        <Button 
+          onClick={handleClearText} 
+          disabled={loading}
+          style={{ backgroundColor: '#75201a', color: 'white' }}
+          >
+            {loading ? 'Очистка...' : 'Очистити історію навчання'}
         </Button>
 
-        <Button
+        <Button 
+          onClick={handleGetBigramDict} 
+          disabled={loading}
+          variant="contained"
+
+        >
+          {loading ? 'Отримання словника...' : 'Словник'}
+         </Button>
+
+         <Button
           variant="contained"
           onClick={generateData}
           style={{ backgroundColor: '#4CAF50', color: 'white' }}
         >
           Генерація
-        </Button>
-
-        <Button 
-        onClick={handleClearText} 
-        disabled={loading}
-        style={{ backgroundColor: '#75201a', color: 'white' }}
-        >
-          {loading ? 'Очистка...' : 'Очистити історію навчання'}
         </Button>
 
         
@@ -152,6 +183,13 @@ const MainPage = () => {
         <div>
           <Typography variant="h6">Отримана інформація:</Typography>
           <pre>{JSON.stringify(responseData.message)}</pre>
+        </div>
+      )}
+
+      {bigramDict && (
+        <div style={{ maxHeight: '300px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px' }}>
+          <Typography variant="h6">Словник:</Typography>
+          <pre>{JSON.stringify(bigramDict, null, 2)}</pre>
         </div>
       )}
     </div>
