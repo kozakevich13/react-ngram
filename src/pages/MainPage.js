@@ -109,12 +109,7 @@ const MainPage = () => {
         InputLabelProps={{ style: { color: '#888' } }}
         style={{ marginTop: '10px' }}
       />
-    </div>
-      </div>
-  
-
-
-      <div className="button-container">
+        <div className="button-container">
         <Button variant="contained" onClick={() => sendTextToServer(largeTextInput)}>
           Відправити багаторядковий текст
         </Button>
@@ -130,14 +125,23 @@ const MainPage = () => {
         >
           Генерація
         </Button>
-      </div>
 
+        
+      </div>
       {responseData && (
         <div>
           <Typography variant="h6">Отримана інформація:</Typography>
           <pre>{JSON.stringify(responseData.message)}</pre>
         </div>
       )}
+    </div>
+      </div>
+  
+
+
+    
+
+     
     </div>
   );
 };
