@@ -101,7 +101,11 @@ const MainPage = () => {
   return (
     <div className="main-container">
       <div className="header">
-        <Typography variant="h3">Головна сторінка</Typography>
+        <div>
+          <Typography variant="h5">Генератор текстових повідомлень заданої семантичної спрямованості </Typography>
+          <Typography variant="h5"> з використанням лексичних n-грам</Typography>
+        </div>
+  
         <div className="user-info">
           <Typography style={{ marginRight: '10px'}}  variant="h5">Доброго дня, {userName}!</Typography>
           <Stack direction="row" spacing={2} alignItems="center">
@@ -113,102 +117,107 @@ const MainPage = () => {
         </div>
       </div>
       <div className='main-block'>
-      <div className='first-block'>
-        <TextField
-            id="outlined-multiline-static"
-            label="Введіть багаторядковий текст"
-            multiline
-            rows={20}
-            value={largeTextInput}
-            onChange={(e) => setLargeTextInput(e.target.value)}
-            InputProps={{ style: { color: '#fff' } }}
-            InputLabelProps={{ style: { color: '#888'  } }}
-            style={{ marginTop: '10px'}} 
-        />
-    </div>
-    <div className='second-block'>
-        
-      <TextField
-        id="outlined-basic"
-        label="Введіть одне слово"
-        value={singleWordInput}
-        onChange={(e) => setSingleWordInput(e.target.value)}
-        InputProps={{ style: { color: '#fff' } }}
-        InputLabelProps={{ style: { color: '#888' } }}
-        style={{ marginTop: '10px' }}
-      />
-
-      <TextField
-        id="outlined-basic"
-        label="Кількість слів"
-        type="number"
-        value={numWordsInput}
-        onChange={(e) => setNumWordsInput(e.target.value)}
-        InputProps={{ style: { color: '#fff' } }}
-        InputLabelProps={{ style: { color: '#888' } }}
-        style={{ marginTop: '10px' }}
-      />
-        <div className="button-container">
-        <Button variant="contained" onClick={() => sendTextToServer(largeTextInput)}>
-          Відправити багаторядковий текст
-        </Button>
-
-        {/* <Button variant="contained" onClick={() => sendOneWordToServer(singleWordInput)}>
-          Відправити одне слово
-        </Button> */}
-
-      
-
-        <Button 
-          onClick={handleClearText} 
-          disabled={loading}
-          style={{ backgroundColor: '#75201a', color: 'white' }}
-          >
-            {loading ? 'Очистка...' : 'Очистити історію навчання'}
-        </Button>
-
-        <Button 
-          onClick={handleGetBigramDict} 
-          disabled={loading}
-          variant="contained"
-
-        >
-          {loading ? 'Отримання словника...' : 'Словник'}
-         </Button>
-
-         <Button
-          variant="contained"
-          onClick={generateData}
-          style={{ backgroundColor: '#4CAF50', color: 'white' }}
-        >
-          Генерація
-        </Button>
-        <div>
-          <label>Виберіть тип N-грам</label>
-          <select value={selectedNGramType} onChange={handleSelectChange}>
-            <option value="bigram">Bigram</option>
-            <option value="trigram">Trigram</option>
-          </select>
-        </div>
-    
-
-        
+        <div className='first-block'>
+        <Typography variant="h5">Навчання моделі</Typography>
+            <Button style={{ width: '20%'}} variant="outlined" onClick={logOut}>
+              Обрати файл з текстом
+            </Button>
+          <TextField
+              id="outlined-multiline-static"
+              label="Введіть багаторядковий текст"
+              multiline
+              rows={20}
+              value={largeTextInput}
+              onChange={(e) => setLargeTextInput(e.target.value)}
+              InputProps={{ style: { color: '#fff' } }}
+              InputLabelProps={{ style: { color: '#888'  } }}
+              style={{ marginTop: '10px',marginRight: '10px'}} 
+          />
       </div>
-      {responseData && (
-        <div>
-          <Typography variant="h6">Згенероване повідомлення:</Typography>
-          <pre>{JSON.stringify(responseData.message)}</pre>
-        </div>
-      )}
-      <Typography variant="h6">Словник:</Typography>
+
+      <div className='second-block'>
+      <Typography variant="h5">Генерація текстових повідомленнь</Typography>
+        <TextField
+          id="outlined-basic"
+          label="Введіть одне слово"
+          value={singleWordInput}
+          onChange={(e) => setSingleWordInput(e.target.value)}
+          InputProps={{ style: { color: '#fff' } }}
+          InputLabelProps={{ style: { color: '#888' } }}
+          style={{ marginTop: '10px' }}
+        />
+
+        <TextField
+          id="outlined-basic"
+          label="Кількість слів"
+          type="number"
+          value={numWordsInput}
+          onChange={(e) => setNumWordsInput(e.target.value)}
+          InputProps={{ style: { color: '#fff' } }}
+          InputLabelProps={{ style: { color: '#888' } }}
+          style={{ marginTop: '10px' }}
+        />
+          <div className="button-container">
+          <Button variant="contained" onClick={() => sendTextToServer(largeTextInput)}>
+            Відправити багаторядковий текст
+          </Button>
+
+          {/* <Button variant="contained" onClick={() => sendOneWordToServer(singleWordInput)}>
+            Відправити одне слово
+          </Button> */}
+
+        
+
+          <Button 
+            onClick={handleClearText} 
+            disabled={loading}
+            style={{ backgroundColor: '#75201a', color: 'white' }}
+            >
+              {loading ? 'Очистка...' : 'Очистити історію навчання'}
+          </Button>
+
+          <Button 
+            onClick={handleGetBigramDict} 
+            disabled={loading}
+            variant="contained"
+
+          >
+            {loading ? 'Отримання словника...' : 'Словник'}
+          </Button>
+
+          <Button
+            variant="contained"
+            onClick={generateData}
+            style={{ backgroundColor: '#4CAF50', color: 'white' }}
+          >
+            Генерація
+          </Button>
+          <div>
+            <label>Виберіть тип N-грам</label>
+            <select value={selectedNGramType} onChange={handleSelectChange}>
+              <option value="bigram">Bigram</option>
+              <option value="trigram">Trigram</option>
+            </select>
+          </div>
       
-      {bigramDict && (
-        <div style={{ maxHeight: '300px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px' }}>
-          <Typography variant="h6">Словник:</Typography>
-          <pre>{JSON.stringify(bigramDict, null, 2)}</pre>
+
+          
         </div>
-      )}
-    </div>
+        {responseData && (
+          <div>
+            <Typography variant="h6">Згенероване повідомлення:</Typography>
+            <pre>{JSON.stringify(responseData.message)}</pre>
+          </div>
+        )}
+        <Typography variant="h6">Словник:</Typography>
+        
+        {bigramDict && (
+          <div style={{ maxHeight: '300px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px' }}>
+            <Typography variant="h6">Словник:</Typography>
+            <pre>{JSON.stringify(bigramDict, null, 2)}</pre>
+          </div>
+        )}
+      </div>
       </div>
   
 
