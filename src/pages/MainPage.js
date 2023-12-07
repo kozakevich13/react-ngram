@@ -20,6 +20,7 @@ const MainPage = () => {
   const [loading, setLoading] = useState(false);
   const [bigramDict, setBigramDict] = useState(null);
   const [selectedNGramType, setSelectedNGramType] = useState("bigram");
+  const [message, setMessage] = useState("");
   const userName = localStorage.getItem("userName");
   const userImg = localStorage.getItem("userImg");
   const navigate = useNavigate();
@@ -127,6 +128,26 @@ const MainPage = () => {
       });
   };
 
+  const handleDownloadDictionary = () => {
+    axios
+      .get("http://localhost:5000/download-dictionary", {
+        responseType: "blob",
+      })
+      .then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "dictionary.txt");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      })
+      .catch((error) => {
+        console.error("Error downloading dictionary:", error);
+        setMessage("Error downloading dictionary");
+      });
+  };
+
   return (
     <div className="main-container">
       <div className="header">
@@ -213,6 +234,11 @@ const MainPage = () => {
                 <option value="trigram">Trigram</option>
               </select>
             </div>
+            <Button variant="contained" onClick={handleDownloadDictionary}>
+              Download Dictionary
+            </Button>
+
+            <p>{message}</p>
           </div>
 
           <Typography variant="h6">Словник:</Typography>
