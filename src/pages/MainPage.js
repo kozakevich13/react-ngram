@@ -16,6 +16,7 @@ const MainPage = () => {
   const [largeTextInput, setLargeTextInput] = useState("");
   const [singleWordInput, setSingleWordInput] = useState("");
   const [numWordsInput, setNumWordsInput] = useState(6);
+  const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [bigramDict, setBigramDict] = useState(null);
   const [selectedNGramType, setSelectedNGramType] = useState("bigram");
@@ -103,6 +104,29 @@ const MainPage = () => {
   };
   console.log(selectedNGramType);
 
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  const handleUpload = () => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    fetch("http://localhost:5000/upload-fiel", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        // Handle success or error
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        // Handle error
+      });
+  };
+
   return (
     <div className="main-container">
       <div className="header">
@@ -132,9 +156,16 @@ const MainPage = () => {
         <div className="first-block">
           <Typography variant="h5">Навчання моделі</Typography>
 
-          <Button style={{ width: "20%" }} variant="outlined" onClick={logOut}>
-            Обрати файл з текстом
-          </Button>
+          <div>
+            <input type="file" onChange={handleFileChange} />
+            <Button
+              style={{ width: "20%" }}
+              variant="outlined"
+              onClick={handleUpload}
+            >
+              Upload File
+            </Button>
+          </div>
 
           <Button style={{ width: "20%" }} variant="outlined" onClick={logOut}>
             Переглянути токенізований текст
