@@ -196,11 +196,12 @@ const MainPage = () => {
       </div>
       {responseData && (
         <div>
-          <Typography variant="h6">Отримана інформація:</Typography>
+          <Typography variant="h6">Згенероване повідомлення:</Typography>
           <pre>{JSON.stringify(responseData.message)}</pre>
         </div>
       )}
-
+      <Typography variant="h6">Словник:</Typography>
+      
       {bigramDict && (
         <div style={{ maxHeight: '300px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px' }}>
           <Typography variant="h6">Словник:</Typography>
